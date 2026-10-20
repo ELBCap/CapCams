@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "capcams",
+  "version": "${version}",
+  "name": "CapCams",
+  "description": "Divisiones de camara al estilo anime, series y peliculas (pantalla dividida con varias camaras) con Veil. Herramienta y addon de NarrativeCraft.",
+  "authors": ["ELB_GG"],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["dev.elbgg.capcams.CapCams"],
+    "client": ["dev.elbgg.capcams.client.CapCamsClient"]
+  },
+  "mixins": ["capcams.mixins.json"],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}",
+    "veil": ">=4.5.0",
+    "imguimc": ">=2.0.0"
+  },
+  "suggests": {
+    "narrativecraft": "*"
+  }
+}

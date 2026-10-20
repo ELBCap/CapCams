@@ -1,0 +1,16 @@
+{
+  "renderStage": "after_level",
+  "stages": [
+    {
+      "type": "veil:blit",
+      "shader": "capcams:split",
+      "in": "minecraft:main"
+    }
+  ],
+  "textures": {
+    "PanelSampler1": { "type": "framebuffer", "name": "capcams:panel_1" },
+    "PanelSampler2": { "type": "framebuffer", "name": "capcams:panel_2" },
+    "PanelSampler3": { "type": "framebuffer", "name": "capcams:panel_3" },
+    "PanelSampler4": { "type": "framebuffer", "name": "capcams:panel_4" }
+  }
+}
