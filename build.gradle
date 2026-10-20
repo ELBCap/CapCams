@@ -63,3 +63,46 @@ jar {
         rename { "${it}_${project.archives_base_name}" }
     }
 }
+
+publishing {
+    publications {
+        create("mavenJava", MavenPublication) {
+            groupId = project.maven_group
+            artifactId = "capcams-fabric-${project.minecraft_version}"
+            version = project.mod_version
+            from components.java
+            pom {
+                name = "CapCams"
+                description = "Divisiones de camara (pantalla dividida) con Veil, herramienta y addon de NarrativeCraft"
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "Elbgg"
+            def snapshot = project.mod_version.endsWith("-SNAPSHOT")
+            url = uri(snapshot ? project.maven_url_snapshots : project.maven_url_releases)
+            credentials {
+                username = findProperty("reposiliteUser") ?: System.getenv("REPOSILITE_USER")
+                password = findProperty("reposilitePassword") ?: System.getenv("REPOSILITE_TOKEN")
+            }
+            authentication {
+                basic(BasicAuthentication)
+            }
+        }
+    }
+}
+
+tasks.register("checkPublishCredentials") {
+    doLast {
+        def user = findProperty("reposiliteUser") ?: System.getenv("REPOSILITE_USER")
+        def token = findProperty("reposilitePassword") ?: System.getenv("REPOSILITE_TOKEN")
+        if (!user || !token) {
+            throw new GradleException("Faltan las credenciales de Reposilite: define reposiliteUser y reposilitePassword en ~/.gradle/gradle.properties (o REPOSILITE_USER y REPOSILITE_TOKEN en el entorno).")
+        }
+    }
+}
+
+tasks.withType(PublishToMavenRepository).configureEach {
+    dependsOn "checkPublishCredentials"
+}
