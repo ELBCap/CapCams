@@ -6,6 +6,7 @@ import dev.elbgg.capcams.data.Shot;
 import dev.elbgg.capcams.CapCams;
 import dev.elbgg.capcams.client.studio.Studio;
 import dev.elbgg.capcams.client.studio.StudioUi;
+import dev.elbgg.capcams.narrative.NarrativeGuard;
 import foundry.veil.api.client.render.VeilLevelPerspectiveRenderer;
 import foundry.veil.api.client.render.VeilRenderSystem;
 import foundry.veil.api.client.render.framebuffer.AdvancedFbo;
@@ -102,8 +103,13 @@ public final class SplitRenderer {
         fbo.bind(false);
         fbo.clear();
         AdvancedFbo.unbind();
-        VeilLevelPerspectiveRenderer.render(fbo, new Matrix4f(), projection, new Vector3d(pose.x(), pose.y(), pose.z()),
-                orientation, mc.options.getClampedViewDistance(), tracker, false);
+        NarrativeGuard.begin();
+        try {
+            VeilLevelPerspectiveRenderer.render(fbo, new Matrix4f(), projection, new Vector3d(pose.x(), pose.y(), pose.z()),
+                    orientation, mc.options.getClampedViewDistance(), tracker, false);
+        } finally {
+            NarrativeGuard.end();
+        }
     }
 
    private static void onPreProcessing(Identifier name, PostPipeline pipeline, PostPipeline.Context context) {

@@ -27,11 +27,18 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modImplementation("foundry.veil:veil-fabric-${project.minecraft_version}:${project.veil_version}") {
+    def veil = "foundry.veil:veil-fabric-${project.minecraft_version}:${project.veil_version}"
+    def imguimc = "foundry.imguimc:imguimc-fabric-${project.minecraft_version}:${project.imguimc_version}"
+    modCompileOnly(veil) {
         exclude group: "maven.modrinth"
         exclude group: "me.fallenbreath"
     }
-    modImplementation("foundry.imguimc:imguimc-fabric-${project.minecraft_version}:${project.imguimc_version}")
+    modLocalRuntime(veil) {
+        exclude group: "maven.modrinth"
+        exclude group: "me.fallenbreath"
+    }
+    modCompileOnly(imguimc)
+    modLocalRuntime(imguimc)
     modCompileOnly files("libs/narrativecraft-api-fabric-1.21.1-2.3.1.jar")
 }
 

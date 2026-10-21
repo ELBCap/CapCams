@@ -162,3 +162,11 @@ Cynthia: Demuéstrame cuán digno eres.
 # capcams_clear 0.8
 -> END
 ```
+
+### Cinemáticas (cutscenes) de NarrativeCraft
+
+El panel `main` es la cámara real del jugador, así que durante una cutscene de NarrativeCraft `main` **es la cámara de la
+cinemática** y el resto de paneles se dibujan aparte. Con el fork de NarrativeCraft (API 4.1+) cada vista extra se renderiza
+dentro de `beginSecondaryView()/endSecondaryView()`, de modo que NarrativeCraft no le aplica su cámara ni sus gizmos y no se
+corrompe nada. Para que los diálogos salgan mientras se mueve la cámara usa `# cutscene <nombre> --async` (y `# cutscene_wait`
+para esperar a que termine). Con versiones antiguas de NarrativeCraft el guard simplemente no hace nada.
